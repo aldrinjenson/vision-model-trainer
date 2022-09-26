@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/static/css/index.css" />
+  <script defer src="/static/js/index.js"></script>
+  <title>Train Model</title>
+</head>
+
+<body>
+  <br />
+  <video muted id="video" width="320" height="240" autoplay></video>
+  <br />
+  <p id="status-msg">Loading video feed..</p>
+  <div style="display:flex">
+    <button id="start-record" style="margin-right:2%;">Start Recording</button>
+    <button style="display: none;" id="stop-record">Stop Recording</button>
+  </div>
+
+  <div style="display:flex;margin:5%;">
+    <input id="person-name" style="margin-right: 2%;" type="text" placeholder="Enter person name">
+    <input type="text" placeholder="Enter person description">
+  </div>
+  <br>
+
+  <div id="video-feeds"></div>
+  <a id="download-video" download="test.webm">Download Video</a>
+  <button id="upload-btn">Upload video</button>
+</body>
+
+</html>
