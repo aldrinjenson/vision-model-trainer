@@ -75,5 +75,10 @@ uploadBtn.addEventListener("click", () => {
     body: data,
   }).then((resp) => {
     console.log(resp);
-  });
+    alert("File uploaded successfully and is being processed")
+    personNameInput.value = ""
+  }).catch(err => {
+    console.log(err);
+    alert("There seems to be some error in uploading file..  please check again")
+  })
 });

@@ -12,16 +12,9 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-@app.route('/')
-def index():
-    return "index page"
-
-
-@app.post('/video')
-def getVideo():
-    f = request.files[0]
-    print(f)
-    return 'video received'
+@app.get("/home")
+def home():
+    return current_app.send_static_file("index.html")
 
 
 @app.route("/upload", methods=['post'])
@@ -33,37 +26,21 @@ def form():
     videoFile.save(filePath)
 
     imagesFolderName = IMAGES_FOLDER + '/' + filename
-    if not os.path.exists(imagesFolderName):
+    frameNr = 0
+    if os.path.exists(imagesFolderName):
+        numFiles = len(os.listdir(imagesFolderName))
+        frameNr = numFiles
+    else:
         os.makedirs(imagesFolderName)
 
     capture = cv2.VideoCapture(filePath)
-    frameNr = 0
     imagePath = os.getcwd() + f'/images/{filename}'
-    print(imagePath)
 
-    while (True):
+    success = True
+    while (success):
         success, frame = capture.read()
-        print(frameName)
-        if success and frameNr % 5 == 0:
+        if success and frameNr % 2 == 0:
             cv2.imwrite(f'{imagesFolderName}/frame_{frameNr}.jpg', frame)
-        else:
-            break
         frameNr = frameNr+1
-    print(imagePath)
     capture.release()
-    return "file received"
-
-
-@app.get("/home")
-def home():
-    return current_app.send_static_file("index.html")
-
-
-@app.get('/users/<string:name>')
-def user_hello(name):
-    return f"Hello {escape(name)}"
-
-
-@app.route('/path/<path:subpath>', methods=["GET"])
-def show_subpath(subpath):
-    return f"Subpath = {escape(subpath)}"
+    return "file received and splitted successfully"
