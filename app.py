@@ -3,6 +3,8 @@ import os
 from werkzeug.utils import secure_filename
 from markupsafe import escape
 import cv2
+from trainer import train
+import threading
 
 
 UPLOAD_FOLDER = 'videos'
@@ -18,7 +20,7 @@ def home():
 
 
 @app.route("/upload", methods=['post'])
-def form():
+def upload():
     videoFile = request.files.get('file')
     # file.fileName = ther person's name (passed from client)
     filename = secure_filename(videoFile.filename)
@@ -43,4 +45,6 @@ def form():
             cv2.imwrite(f'{imagesFolderName}/frame_{frameNr}.jpg', frame)
         frameNr = frameNr+1
     capture.release()
+    print("going to train")
+    threading.Thread(target=train).start()
     return "file received and splitted successfully"

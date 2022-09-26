@@ -20,6 +20,7 @@ const addNewVideoFeed = (videoSrc) => {
   newVid.controls = true;
   newVid.muted = true;
   newVid.autoplay = true;
+  newVid.style.width = '95%';
   videoFeeds.append(newVid);
   intermediary_blobs_recorded = [];
 };
