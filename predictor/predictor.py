@@ -19,4 +19,4 @@ def predict(img):
 
 interface = gr.Interface(fn=predict, inputs=gr.components.Image(shape=(512, 512)), outputs=gr.components.Label(
     num_top_classes=2), title=title, description=description, article=article, examples=examples, interpretation=interpretation)
-interface.launch(share=False, enable_queue=enable_queue)
+interface.launch(share=True, enable_queue=enable_queue)
