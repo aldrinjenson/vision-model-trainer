@@ -2,7 +2,7 @@ let statusMsg = document.querySelector("#status-msg");
 let video = document.querySelector("#video");
 let start_button = document.querySelector("#start-record");
 let stop_button = document.querySelector("#stop-record");
-let download_link = document.querySelector("#download-video");
+let switchCameraBtn = document.querySelector("#switch-camera");
 const uploadBtn = document.querySelector("#upload-btn");
 const personNameInput = document.querySelector("#person-name");
 
@@ -28,6 +28,7 @@ const addNewVideoFeed = (videoSrc) => {
 window.onload = async () => {
   statusMsg.innerText = "Camera loaded";
   camera_stream = await navigator.mediaDevices.getUserMedia({
+    // video: { facingMode: { exact: "environment" } },
     video: true,
     audio: true,
   });

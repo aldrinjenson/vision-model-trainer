@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-@app.get("/home")
+@app.get("/")
 def home():
     return current_app.send_static_file("index.html")
 

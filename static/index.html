@@ -11,7 +11,10 @@
 </head>
 
 <body>
-  <h1>Add new memories!</h1>
+  <div style="text-align: center;">
+    <h1>Add new memories!</h1>
+    <a href=" https://29092.gradio.app"> Search Faces</a>
+  </div>
   <br>
   <video muted id="video" width="320" height="240" autoplay></video>
   <br />
@@ -19,15 +22,15 @@
   <div style="display:flex">
     <button id="start-record" style="margin-right:2%;">Start Recording</button>
     <button style="display: none;" id="stop-record">Stop Recording</button>
+    <button id="switch-camera">Switch Camera</button>
   </div>
 
   <div style="display:flex;margin:5%;">
-    <input id="person-name" style="margin-right: 2%;" type="text" placeholder="Enter person name">
+    <input id="person-name" style="margin-right: 2%;" type="text" placeholder="Enter associated name">
   </div>
   <br>
 
   <div id="video-feeds" style="text-align: center;"></div>
-  <a id="download-video" download="test.webm">Download Video</a>
   <button id="upload-btn">Upload video</button>
 </body>
 
