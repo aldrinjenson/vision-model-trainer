@@ -14,6 +14,7 @@ def predict(img):
     labels = learn.dls.vocab
     img = PILImage.create(img)
     pred, pred_idx, probs = learn.predict(img)
+    print("New prediction made")
     return {labels[i]: float(probs[i]) for i in range(len(labels))}
 
 

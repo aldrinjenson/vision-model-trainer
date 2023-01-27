@@ -1,3 +1,5 @@
+
+from moviepy.editor import *
 from flask import Flask, current_app, url_for, request
 import os
 from werkzeug.utils import secure_filename
@@ -48,3 +50,25 @@ def upload():
     print("going to train")
     threading.Thread(target=train).start()
     return "file received and splitted successfully"
+
+
+@app.get("/createMovie" )
+def createMovie():
+    folder = "images/Aldrin/"
+    image_files = [folder + f for f in os.listdir(folder) if f.endswith(".jpg")]
+
+    # Create a list of clips for each image
+    clips = [ImageClip(f).set_duration(2) for f in image_files]
+
+    # Add an audio track
+    audio = AudioFileClip("bgSong.mp3")
+
+    # Concatenate all the clips together
+    video = concatenate_videoclips(clips, method="compose")
+
+    # Add the audio track to the video
+    video = video.set_audio(audio)
+
+    # Write the video to a file
+    video.write_videofile("output.mp4")
+
