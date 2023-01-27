@@ -21,6 +21,23 @@ def home():
     return current_app.send_static_file("index.html")
 
 
+@app.get("/createMovie/<folder_name>")
+def createMovie(folder_name: str):
+    folder = f"images/{folder_name}/"
+    image_files = [
+        folder + f for f in os.listdir(folder) if f.endswith(".jpg")]
+
+    img_clips = [ImageClip(f).set_duration(2) for f in image_files]
+    video = concatenate_videoclips(img_clips)
+
+    music = AudioFileClip("bgSong.mp3")
+    audio = afx.audio_loop(music, duration=video.duration)
+    video = video.set_audio(audio)
+
+    video.write_videofile("output.mp4", fps=60)
+    return "Done"
+
+
 @app.route("/upload", methods=['post'])
 def upload():
     videoFile = request.files.get('file')
@@ -44,31 +61,10 @@ def upload():
     while (success):
         success, frame = capture.read()
         if success and frameNr % 2 == 0:
-            cv2.imwrite(f'{imagesFolderName}/frame_{frameNr}.jpg', frame)
+            # cv2.imwrite(f'{imagesFolderName}/frame_{frameNr}.jpg', frame)
+            cv2.imwrite(f'{imagesFolderName}/frame_{frameNr//2}.jpg', frame)
         frameNr = frameNr+1
     capture.release()
     print("going to train")
     threading.Thread(target=train).start()
     return "file received and splitted successfully"
-
-
-@app.get("/createMovie" )
-def createMovie():
-    folder = "images/Aldrin/"
-    image_files = [folder + f for f in os.listdir(folder) if f.endswith(".jpg")]
-
-    # Create a list of clips for each image
-    clips = [ImageClip(f).set_duration(2) for f in image_files]
-
-    # Add an audio track
-    audio = AudioFileClip("bgSong.mp3")
-
-    # Concatenate all the clips together
-    video = concatenate_videoclips(clips, method="compose")
-
-    # Add the audio track to the video
-    video = video.set_audio(audio)
-
-    # Write the video to a file
-    video.write_videofile("output.mp4")
-
